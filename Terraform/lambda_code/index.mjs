@@ -3,7 +3,7 @@ import { DynamoDBDocumentClient, ScanCommand, PutCommand } from "@aws-sdk/lib-dy
 
 const client = new DynamoDBClient({ region: "us-east-1" });
 const dynamo = DynamoDBDocumentClient.from(client);
-const tableName = "CS365-Serverless-App-Table";
+const tableName = process.env.TABLE_NAME;
 
 export const handler = async (event) => {
   const headers = {
