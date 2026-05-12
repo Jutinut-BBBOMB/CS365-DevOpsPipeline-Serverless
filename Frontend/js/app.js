@@ -2,7 +2,7 @@
  * FETCH STUDENT DATA (unchanged API logic)
  ********************************************/
 var fetchStudentData = () => {
-    var endpoint = 'https://ytwl5abrrb.execute-api.us-east-1.amazonaws.com/student-api/getStudent';
+    var endpoint = 'https://hfeyk1duc4.execute-api.us-east-1.amazonaws.com/student-api/getStudent';
 
     return fetch(endpoint)
         .then(response => {

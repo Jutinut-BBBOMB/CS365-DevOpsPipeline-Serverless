@@ -9,23 +9,20 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Set up AWS credentials
-          command: echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY > ~/.env
-      - run:
-          name: Initializing the Terraform code
+          name: Terraform Init
           command: |
-            cd ./Non-Modularized/AWS-Serverless-Project
+            cd Terraform
             terraform init
       - run:
           name: Terraform Plan
           command: |
-            cd ./Non-Modularized/AWS-Serverless-Project
-            terraform plan -var-file variables.tfvars
+            cd Terraform
+            terraform plan
       - run:
           name: Terraform Apply
           command: |
-            cd ./Non-Modularized/AWS-Serverless-Project
-            terraform apply --auto-approve -var-file=variables.tfvars
+            cd Terraform
+            terraform apply --auto-approve
 
   destroy:
     docker:
@@ -35,25 +32,27 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Set up AWS credentials
-          command: echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY > ~/.env
-      - run:
-          name: Initializing the Terraform code
+          name: Terraform Init
           command: |
-            cd ./Non-Modularized/AWS-Serverless-Project
+            cd Terraform
             terraform init
       - run:
           name: Terraform Destroy
           command: |
-            cd ./Non-Modularized/AWS-Serverless-Project
-            terraform destroy --auto-approve -var-file variables.tfvars
+            cd Terraform
+            terraform destroy --auto-approve
 
 workflows:
-  version: 2
-  build-and-deploy:
+  deploy-infrastructure:
     jobs:
-      - deploy
+      - deploy:
+          filters:
+            branches:
+              only: main
 
   destroy-infrastructure:
     jobs:
-      - destroy
+      - destroy:
+          filters:
+            branches:
+              only: destroy
