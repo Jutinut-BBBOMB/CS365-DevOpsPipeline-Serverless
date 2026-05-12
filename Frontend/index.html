@@ -3,59 +3,86 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bloody Sweet — Student Registry</title>
-  <meta name="description" content="A clean, accessible student registry UI by Aman Pathak." />
-  <meta property="og:title" content="Bloody Sweet — Student Registry" />
-  <meta property="og:description" content="A clean, accessible student registry UI by Aman Pathak." />
+  <title>TerraFlow — Student Registry</title>
+  <meta name="description" content="TerraFlow — Serverless Student Registry powered by AWS and Terraform." />
+  <meta property="og:title" content="TerraFlow — Student Registry" />
+  <meta property="og:description" content="TerraFlow — Serverless Student Registry powered by AWS and Terraform." />
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/main.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+
   <header class="site-header" role="banner">
     <div class="container header-inner">
       <div class="brand">
-        <h1 class="logo">Bloody Sweet</h1>
-        <p class="tag">Student Registry · Created by Aman Pathak</p>
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="lg" x1="0" y1="0" x2="42" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#7c5cff"/>
+              <stop offset="50%" stop-color="#00d4ff"/>
+              <stop offset="100%" stop-color="#7c5cff"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="1.8" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect width="42" height="42" rx="12" fill="url(#lg)" opacity=".12"/>
+          <rect width="42" height="42" rx="12" fill="none" stroke="url(#lg)" stroke-width="1.2" opacity=".35"/>
+          <path d="M21 21 C21 21 17 14 12 14 C7 14 7 28 12 28 C17 28 21 21 21 21 C21 21 25 14 30 14 C35 14 35 28 30 28 C25 28 21 21 21 21 Z"
+                stroke="url(#lg)" stroke-width="2.5" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+        </svg>
+        <div>
+          <h1 class="logo">TerraFlow</h1>
+          <p class="tag">Student Registry · CS365 Serverless</p>
+        </div>
       </div>
-      <nav class="site-nav" role="navigation" aria-label="Main navigation">
+      <nav role="navigation" aria-label="Main navigation">
         <button id="themeToggle" aria-label="Toggle dark mode" class="btn icon-btn">🌓</button>
       </nav>
     </div>
   </header>
 
   <main id="main" class="container" role="main">
+
     <section class="card" aria-labelledby="formTitle">
-      <center><h2 id="formTitle">Add Student</h2></center>
+      <h2 class="card-title" id="formTitle">Add Student</h2>
       <form id="studentForm" class="form" autocomplete="on" novalidate>
 
-        <label for="studentName">Student Name</label>
-        <input id="studentName" name="studentName" type="text" required aria-required="true" />
+        <div class="field">
+          <label for="studentName">Student Name</label>
+          <input id="studentName" name="studentName" type="text" placeholder="Enter full name" required aria-required="true" />
+        </div>
 
-        <label for="rollNumber">Roll Number</label>
-        <input id="rollNumber" name="rollNumber" type="text" inputmode="numeric" required aria-required="true" />
+        <div class="field">
+          <label for="rollNumber">Roll Number</label>
+          <input id="rollNumber" name="rollNumber" type="text" inputmode="numeric" placeholder="e.g. 001" required aria-required="true" />
+        </div>
 
-        <label for="class">Class</label>
-        <select id="class" name="class" required aria-required="true">
-          <option value="Select">Select</option>
-          <option>Class 1</option>
-          <option>Class 2</option>
-          <option>Class 3</option>
-          <option>Class 4</option>
-          <option>Class 5</option>
-          <option>Class 6</option>
-          <option>Class 7</option>
-          <option>Class 8</option>
-          <option>Class 9</option>
-          <option>Class 10</option>
-          <option>Class 11</option>
-          <option>Class 12</option>
-          <option>Bachelor's(College)</option>
-          <option>Master's(College)</option>
-          <option>Others</option>
-        </select>
+        <div class="field field-full">
+          <label for="class">Class</label>
+          <select id="class" name="class" required aria-required="true">
+            <option value="Select">Select class...</option>
+            <option>Class 1</option>
+            <option>Class 2</option>
+            <option>Class 3</option>
+            <option>Class 4</option>
+            <option>Class 5</option>
+            <option>Class 6</option>
+            <option>Class 7</option>
+            <option>Class 8</option>
+            <option>Class 9</option>
+            <option>Class 10</option>
+            <option>Class 11</option>
+            <option>Class 12</option>
+            <option>Bachelor's (College)</option>
+            <option>Master's (College)</option>
+            <option>Others</option>
+          </select>
+        </div>
 
         <div class="form-actions">
           <button type="submit" class="btn primary">Add Student</button>
@@ -65,46 +92,46 @@
     </section>
 
     <section class="card" aria-labelledby="tableTitle">
-      <h2 id="tableTitle">Students</h2>
+      <h2 class="card-title" id="tableTitle">Students</h2>
       <div class="table-wrap">
         <table class="students-table" aria-describedby="tableTitle">
           <thead>
-            <tr><th>Roll</th><th>Name</th><th>Class</th></tr>
+            <tr>
+              <th>Roll</th>
+              <th>Name</th>
+              <th>Class</th>
+            </tr>
           </thead>
-          <tbody id="studentTableBody">
-            <!-- rows populated by JS -->
-          </tbody>
+          <tbody id="studentTableBody"></tbody>
         </table>
-        <div id="loadingIndicator" class="skeleton" aria-hidden="true"></div>
+        <div id="loadingIndicator" class="skeleton" aria-hidden="true" style="display:none"></div>
+        <div id="emptyState" class="empty-state" style="display:none">
+          <div class="empty-icon">🎓</div>
+          <p>No students yet. Add your first student above.</p>
+        </div>
       </div>
     </section>
+
   </main>
 
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-inner">
-      <div>
-        <p>© <span id="year"></span> Aman Pathak</p>
-      </div>
-      <div class="socials" aria-hidden="false">
-        <a href="https://github.com/AmanPathak-DevOps" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a> ·
-        <a href="https://medium.com/@amanpathakdevops" target="_blank" rel="noopener" aria-label="Medium">Medium</a>
-      </div>
+      <span>© <span id="year"></span> TerraFlow · CS365</span>
+      <a href="https://github.com/Jutinut-BBBOMB/CS365-DevOpsPipeline-Serverless" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
   </footer>
 
-  <!-- Accessible modal -->
   <div id="customModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal-overlay" onclick="closeModal()"></div>
-
     <div class="modal-content">
-      <button class="modal-close" aria-label="Close" onclick="closeModal()">&times;</button>
-
+      <button class="modal-close" aria-label="Close" onclick="closeModal()">✕</button>
       <div class="modal-body">
-        <p class="modal-message">⚠️ Please fill out all fields.</p>
+        <div class="modal-icon">⚠️</div>
+        <p class="modal-message">Please fill out all fields</p>
+        <p class="modal-sub">Name, Roll Number and Class are required.</p>
       </div>
     </div>
   </div>
-
 
   <script src="js/app.js" defer></script>
 </body>

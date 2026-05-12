@@ -19,21 +19,26 @@ var fetchStudentData = () => {
  ********************************************/
 var updateTable = (data) => {
     var tbody = document.getElementById('studentTableBody');
+    var emptyState = document.getElementById('emptyState');
     tbody.innerHTML = "";
 
-    if (Array.isArray(data)) {
-        data.forEach(student => {
+    if (Array.isArray(data) && data.length > 0) {
+        emptyState.style.display = 'none';
+        data.forEach((student, i) => {
             var row = tbody.insertRow();
+            row.style.animationDelay = `${i * 0.04}s`;
+            row.classList.add('row-new');
 
-            row.insertCell(0).innerText = student.roll_number;
+            var rollCell = row.insertCell(0);
+            rollCell.innerHTML = `<span class="roll-badge">${student.roll_number}</span>`;
             row.insertCell(1).innerText = student.student_name;
             row.insertCell(2).innerText = student.student_class;
         });
-    }
-    else if (data.statusCode && data.body) {
+    } else if (Array.isArray(data) && data.length === 0) {
+        emptyState.style.display = 'block';
+    } else if (data.statusCode && data.body) {
         console.error('Error response from API:', data.body);
-    }
-    else {
+    } else {
         console.error('Unexpected response:', data);
     }
 };
