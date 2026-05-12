@@ -9,6 +9,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Configure AWS credentials
+          command: |
+            mkdir -p ~/.aws
+            printf "[default]\naws_access_key_id=%s\naws_secret_access_key=%s\naws_session_token=%s\n" \
+              "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" "$AWS_SESSION_TOKEN" > ~/.aws/credentials
+      - run:
           name: Terraform Init
           command: |
             cd Terraform
@@ -31,6 +37,12 @@ jobs:
       AWS_DEFAULT_REGION: "us-east-1"
     steps:
       - checkout
+      - run:
+          name: Configure AWS credentials
+          command: |
+            mkdir -p ~/.aws
+            printf "[default]\naws_access_key_id=%s\naws_secret_access_key=%s\naws_session_token=%s\n" \
+              "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" "$AWS_SESSION_TOKEN" > ~/.aws/credentials
       - run:
           name: Terraform Init
           command: |
