@@ -2,7 +2,7 @@
  * FETCH STUDENT DATA (unchanged API logic)
  ********************************************/
 var fetchStudentData = () => {
-    var endpoint = 'https://gs2cef5wee.execute-api.us-east-1.amazonaws.com/student-api/getStudent';
+    var endpoint = 'https://hrp56oij8d.execute-api.us-east-1.amazonaws.com/student-api/getStudent';
 
     return fetch(endpoint)
         .then(response => {
@@ -58,7 +58,7 @@ var addStudent = (rollNumber, studentName, className) => {
 
     closeModal(); // hide modal before submitting
 
-    var endpoint = 'https://gs2cef5wee.execute-api.us-east-1.amazonaws.com/student-api/addStudent';
+    var endpoint = 'https://hrp56oij8d.execute-api.us-east-1.amazonaws.com/student-api/addStudent';
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
