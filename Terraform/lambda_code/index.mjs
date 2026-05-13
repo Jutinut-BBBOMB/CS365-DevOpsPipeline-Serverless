@@ -14,6 +14,7 @@ export const handler = async (event) => {
   };
 
   try {
+    console.log("EVENT:", JSON.stringify(event));
     const routeKey = event.routeKey;
 
     if (routeKey === "GET /student-api/getStudent") {
