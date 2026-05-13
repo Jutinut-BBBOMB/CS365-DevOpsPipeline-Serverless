@@ -29,6 +29,21 @@ jobs:
           command: |
             cd Terraform
             terraform apply --auto-approve
+      - run:
+          name: Install git
+          command: apk add --no-cache git
+      - run:
+          name: Update API URL in app.js
+          command: |
+            API_URL=$(cd Terraform && terraform output -raw api_endpoint)
+            echo "New API URL: $API_URL"
+            sed -i "s|https://[a-z0-9]*.execute-api.us-east-1.amazonaws.com|${API_URL}|g" Frontend/js/app.js
+            git config user.email "ci@terraflow.com"
+            git config user.name "TerraFlow CI"
+            git add Frontend/js/app.js
+            git diff --cached --quiet && echo "URL unchanged, skip push" || \
+              (git commit -m "auto: update API endpoint URL [skip ci]" && \
+               git push https://x-access-token:${GITHUB_TOKEN}@github.com/Jutinut-BBBOMB/CS365-DevOpsPipeline-Serverless.git HEAD:main)
 
   destroy:
     docker:
