@@ -71,9 +71,10 @@ resource "aws_apigatewayv2_api" "http_api" {
 
 # เชื่อมต่อ API Gateway เข้ากับ Lambda
 resource "aws_apigatewayv2_integration" "lambda_integration" {
-  api_id           = aws_apigatewayv2_api.http_api.id
-  integration_type = "AWS_PROXY"
-  integration_uri  = aws_lambda_function.student_api_lambda.invoke_arn
+  api_id                 = aws_apigatewayv2_api.http_api.id
+  integration_type       = "AWS_PROXY"
+  integration_uri        = aws_lambda_function.student_api_lambda.invoke_arn
+  payload_format_version = "2.0"
 }
 
 # สร้าง Routes
