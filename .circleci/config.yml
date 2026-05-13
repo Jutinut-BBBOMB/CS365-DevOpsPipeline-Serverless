@@ -69,6 +69,11 @@ jobs:
             cd Terraform
             terraform init
       - run:
+          name: Terraform Apply (rebuild state)
+          command: |
+            cd Terraform
+            terraform apply --auto-approve
+      - run:
           name: Terraform Destroy
           command: |
             cd Terraform
