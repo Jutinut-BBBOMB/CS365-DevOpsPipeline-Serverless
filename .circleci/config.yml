@@ -33,7 +33,7 @@ jobs:
             cd Terraform
             terraform apply --auto-approve
       - run:
-          name: Update API URL in app.js
+          name: Update API URL and save state
           command: |
             API_URL=$(cd Terraform && terraform output -raw api_endpoint)
             echo "New API URL: $API_URL"
@@ -42,13 +42,10 @@ jobs:
             git config user.name "TerraFlow CI"
             git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/Jutinut-BBBOMB/CS365-DevOpsPipeline-Serverless.git
             git checkout main
-            git add Frontend/js/app.js
-            if git diff --cached --quiet; then
-              echo "URL unchanged, skip push"
-            else
-              git commit -m "auto: update API endpoint URL"
-              git push origin main
-            fi
+            git add Frontend/js/app.js Terraform/terraform.tfstate
+            git diff --cached --quiet && echo "No changes" || \
+              (git commit -m "auto: update API URL and save terraform state" && \
+               git push origin main)
 
   destroy:
     docker:
@@ -68,11 +65,6 @@ jobs:
           command: |
             cd Terraform
             terraform init
-      - run:
-          name: Terraform Apply (rebuild state)
-          command: |
-            cd Terraform
-            terraform apply --auto-approve
       - run:
           name: Terraform Destroy
           command: |
