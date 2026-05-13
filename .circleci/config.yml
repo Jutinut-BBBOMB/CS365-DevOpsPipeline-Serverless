@@ -46,7 +46,7 @@ jobs:
             if git diff --cached --quiet; then
               echo "URL unchanged, skip push"
             else
-              git commit -m "auto: update API endpoint URL [skip ci]"
+              git commit -m "auto: update API endpoint URL"
               git push origin main
             fi
 
